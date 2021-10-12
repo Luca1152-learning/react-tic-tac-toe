@@ -86,7 +86,16 @@ class Game extends React.Component {
         }
 
         const moves = history.map((step, move) => {
-            const desc = move ? "Go to move #" + move : "Go to game start"
+            let desc = ""
+            if (move) {
+                const changedSquare = getChangedSquare(
+                    this.state.history[move - 1].squares,
+                    this.state.history[move].squares
+                )
+                desc = `[#${move}] ${changedSquare}`
+            } else {
+                desc = "[#0] Game start"
+            }
             return (
                 <li key={move}>
                     <button
@@ -136,4 +145,12 @@ function calculateWinner(squares) {
         }
     }
     return null
+}
+
+function getChangedSquare(previousSquares, currentSquares) {
+    for (let i = 0; i < 9; i++) {
+        if (previousSquares[i] != currentSquares[i]) {
+            return `${currentSquares[i]} at (${Math.floor(i / 3) + 1}, ${(i % 3) + 1})`
+        }
+    }
 }
