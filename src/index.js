@@ -99,6 +99,7 @@ class Game extends React.Component {
             return (
                 <li key={move}>
                     <button
+                        style={{ fontWeight: move === this.state.stepNumber && "bold" }}
                         onClick={() => {
                             this.jumpTo(move)
                         }}
@@ -149,7 +150,7 @@ function calculateWinner(squares) {
 
 function getChangedSquare(previousSquares, currentSquares) {
     for (let i = 0; i < 9; i++) {
-        if (previousSquares[i] != currentSquares[i]) {
+        if (previousSquares[i] !== currentSquares[i]) {
             return `${currentSquares[i]} at (${Math.floor(i / 3) + 1}, ${(i % 3) + 1})`
         }
     }
